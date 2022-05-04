@@ -2,16 +2,27 @@ package fr.diginamic.jpa.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="livre")
+@NamedQueries(
+		@NamedQuery(
+				name="Livre.getEmprunts",
+				query="select e from Emprunt e where :livre MEMBER OF e.empLivres"
+				)
+		)
 public class Livre {
 
-	@Id/** Définir la PK **/
-	@Column(name = "id",length = 25,nullable = false)
-	private int id;
+	/** @nnotation de Mapping avec la BDD*/
+	@Id /** Définir la PK */
+	@GeneratedValue(strategy = GenerationType.IDENTITY) /**AUTOINCREMENTAL PAR LE SGBDR */
+	private int id; /** nom de la colonne */
 	
 	@Column(name = "titre",length = 25,nullable = false)
 	private String titre;
